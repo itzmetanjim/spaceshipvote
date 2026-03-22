@@ -1,12 +1,13 @@
 console.log('ssvo loaded script')
 btnlist=["spaceshipvotedemotab" ,"spaceshipvoterepotab" ,"spaceshipvotereadmetab" ]
 framelist=["spaceshipvotedemoframe" ,"spaceshipvoterepoframe" ,"spaceshipvotereadmeframe" ]
-var md = window.markdownit ? window.markdownit() : null;
-if (!md) {
-    console.log('ssvo: markdown-it not found, readme will not be rendered as markdown')
-    md = {
-        render: (text)=> {return text}
-    }
+window.markdownitReplaceLink=module.exports;
+async function getDefaultBranch(owner, repo) {
+    const response = await fetch(`https://api.github.com/repos/${owner}/${repo}`);
+    const data = await response.json();
+
+    console.log("Default Branch:", data.default_branch);
+    return data.default_branch;
 }
 function uncentrify(x){
     x.style.alignItems="flex-start"
@@ -24,6 +25,20 @@ async function run(){
     demo=demobtn.href
     repo=repobtn.href
     readme=readmebtn.href
+    mainb=await getDefaultBranch(repo.split("/")[3], repo.split("/")[4])
+    mdroot=repo+`/raw/${mainb}/`
+    var md = window.markdownit ? window.markdownit({
+        html: true,       
+        linkify: true,    
+        typographer: true 
+
+    }): null; //i give up with markdownitreplacelink
+    if (!md) {
+        console.log('ssvo: markdown-it not found, readme will not be rendered as markdown')
+        md = {
+            render: (text)=> {return text}
+        }
+    }
     console.log("ssvo: links", demo, repo, readme)
     readmec=""
     res=await fetch(readme)
@@ -33,6 +48,16 @@ async function run(){
         console.log("ssvo: failed to fetch readme")
         readmec="Failed to fetch README: "+res.status
     }
+    rreadme=md.render(readmec).replace(
+        /(<img[^>]+src=["'])(?!https?:\/\/|\/)([^"']+)((["'])[^>]*>)/gi,
+        (match, prefix, path, suffix) => {
+            // Ensure mdroot doesn't have a trailing slash and path doesn't have a leading one
+            const cleanRoot = mdroot.replace(/\/$/, "");
+            const cleanPath = path.replace(/^\//, "");
+
+            return `${prefix}${cleanRoot}/${cleanPath}${suffix}`;
+        }
+    );
 
     //uncentrify(document.querySelector('div.ui-heading.ui-heading--blue.ui-heading--full'))
     //uncentrify(document.querySelector('div.votes-new__payout-meter'))
@@ -64,7 +89,7 @@ async function run(){
 
 <iframe id="spaceshipvotedemoframe" class="spaceshipvoteframe" src="${demo}" style="display:none;flex-grow: 1;width: 100%;height:100vh;border: none;" sandbox="allow-scripts allow-forms allow-popups allow-modals allow-downloads"></iframe>
 <iframe id="spaceshipvoterepoframe" class="spaceshipvoteframe" src="${repo}" style="display:none;flex-grow: 1;width: 100%;height:100vh;border: none;" sandbox="allow-scripts allow-forms allow-popups allow-modals allow-downloads"></iframe>
-<div id="spaceshipvotereadmeframe" style="padding:30px;background-color:rgba(0,0,0,50);border-radius=20px"><pre style="white-space: pre-wrap; word-break: break-word;background-color:rgba(0,0,0,0) !important">${md.render(readmec)}</pre></div>
+<div id="spaceshipvotereadmeframe" style="padding:30px;background-color:rgba(0,0,0,50);border-radius=20px"><pre style="white-space: pre-wrap; word-break: break-word;background-color:rgba(0,0,0,0) !important">${rreadme}</pre></div>
     `
     document.querySelector('div.votes-new__project').after(newdiv)
     window.currentTabSSVO=0
