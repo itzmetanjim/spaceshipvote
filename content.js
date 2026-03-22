@@ -22,9 +22,11 @@ async function run(){
     repobtn=document.querySelector('a[aria-label="Repository"]')
     readmebtn=document.querySelector('a[aria-label="Readme"]')
     if (!(demobtn && repobtn && readmebtn)) {console.log('ssvo: buttons not found'); return}
-    demo=demobtn.href
-    repo=repobtn.href
+    dxemo=demobtn.href
+    rxepo=repobtn.href
     readme=readmebtn.href
+    demo=dxemo.replace("github.com","tanjim.org/github.com/#") 
+    repo=rxepo.replace("github.com","tanjim.org/github.com/#")
     mainb=await getDefaultBranch(repo.split("/")[3], repo.split("/")[4])
     mdroot=repo+`/raw/${mainb}/`
     var md = window.markdownit ? window.markdownit({
@@ -88,8 +90,8 @@ async function run(){
 </a>
 </div>
 
-<iframe id="spaceshipvotedemoframe" class="spaceshipvoteframe" src="${demo}" style="display:none;flex-grow: 1;width: 100%;height:100vh;border: none;" sandbox="allow-scripts allow-forms allow-popups allow-modals allow-downloads"></iframe>
-<iframe id="spaceshipvoterepoframe" class="spaceshipvoteframe" src="${repo}" style="display:none;flex-grow: 1;width: 100%;height:100vh;border: none;" sandbox="allow-scripts allow-forms allow-popups allow-modals allow-downloads"></iframe>
+<iframe id="spaceshipvotedemoframe" class="spaceshipvoteframe" src="${demo}" style="display:none;flex-grow: 1;width: 100%;height:100vh;border: none;background-color:#fff" sandbox="allow-scripts allow-forms allow-popups allow-modals allow-downloads"></iframe>
+<iframe id="spaceshipvoterepoframe" class="spaceshipvoteframe" src="${repo}" style="display:none;flex-grow: 1;width: 100%;height:100vh;border: none;background-color:#fff" sandbox="allow-scripts allow-forms allow-popups allow-modals allow-downloads"></iframe>
 <div id="spaceshipvotereadmeframe" style="padding:30px;background-color:rgba(0,0,0,50);border-radius=20px"><pre style="white-space: pre-wrap; word-break: break-word;background-color:rgba(0,0,0,0) !important">${rreadme}</pre></div>
     `
     document.querySelector('div.votes-new__project').after(newdiv)
