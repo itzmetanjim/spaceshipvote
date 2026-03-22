@@ -70,6 +70,7 @@ async function run(){
     newdiv.style.height="100%"
     newdiv.style.width="100%"
     newdiv.innerHTML=`
+    <p>(some sites like marketplace.visualstudio.com do not allow iframes, i cant do anything about this)</p>
     <div>
 <a aria-label="DemoTab" id="spaceshipvotedemotab" target="_blank" data-action="click-&gt;vote-tracker#trackDemoClick auxclick-&gt;vote-tracker#trackDemoClick" class="btn btn--brown btn--borderless">
       <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 27 27" fill="none">
