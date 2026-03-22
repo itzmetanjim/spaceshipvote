@@ -6,7 +6,8 @@
   "content_scripts": [
     {
       "matches": ["https://flavortown.hackclub.com/*"],
-      "js": ["lib/shim.js","lib/markdown-it.min.js","lib/mirl.min.js","content.js"]
+      "js": ["lib/shim.js","lib/markdown-it.min.js","lib/mirl.min.js","content.js"],
+      "css": ["content.css"]
     }
   ],
   "permissions": ["storage","declarativeNetRequest"],

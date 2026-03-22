@@ -60,6 +60,8 @@ async function run(){
             return `${prefix}${cleanRoot}/${cleanPath}${suffix}`;
         }
     );
+    console.log([rreadme])
+    rreadme=rreadme.replace("<img","<img style='max-width:40vw' ")
 
     //uncentrify(document.querySelector('div.ui-heading.ui-heading--blue.ui-heading--full'))
     //uncentrify(document.querySelector('div.votes-new__payout-meter'))
@@ -90,9 +92,9 @@ async function run(){
 </a>
 </div>
 
-<iframe id="spaceshipvotedemoframe" class="spaceshipvoteframe" src="${demo}" style="display:none;flex-grow: 1;width: 100%;height:100vh;border: none;background-color:#fff" sandbox="allow-scripts allow-forms allow-popups allow-modals allow-downloads"></iframe>
-<iframe id="spaceshipvoterepoframe" class="spaceshipvoteframe" src="${repo}" style="display:none;flex-grow: 1;width: 100%;height:100vh;border: none;background-color:#fff" sandbox="allow-scripts allow-forms allow-popups allow-modals allow-downloads"></iframe>
-<div id="spaceshipvotereadmeframe" style="padding:30px;background-color:rgba(0,0,0,50);border-radius=20px"><pre style="white-space: pre-wrap; word-break: break-word;background-color:rgba(0,0,0,0) !important">${rreadme}</pre></div>
+<iframe id="spaceshipvotedemoframe" class="spaceshipvoteframe" src="${demo}" style="display:none;flex-grow: 1;width: 100%;height:100vh;border: none;background-color:#fff" sandbox="allow-scripts allow-forms allow-popups allow-modals allow-downloads ${demo!=dxemo?"allow-same-origin":""}"></iframe>
+<iframe id="spaceshipvoterepoframe" class="spaceshipvoteframe" src="${repo}" style="display:none;flex-grow: 1;width: 100%;height:100vh;border: none;background-color:#fff" sandbox="allow-scripts allow-forms allow-popups allow-modals allow-downloads ${repo!=rxepo?"allow-same-origin":""}"></iframe>
+<div id="spaceshipvotereadmeframe" style="padding:30px;background-color:rgba(0,0,0,50);border-radius=20px;max-width:40vw"><pre style="white-space: pre-wrap; word-break: break-word;background-color:rgba(0,0,0,0) !important">${rreadme}</pre></div>
     `
     document.querySelector('div.votes-new__project').after(newdiv)
     window.currentTabSSVO=0
@@ -103,6 +105,9 @@ async function run(){
         })
     })
     changeTab(0)
+    document.getElementById(framelist[2]).querySelectorAll("img").forEach((img)=>{
+        img.style.maxWidth="35vw"
+    })
 }
 function changeTab(idx){
     window.currentTabSSVO=idx
