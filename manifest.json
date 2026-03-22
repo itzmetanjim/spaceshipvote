@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "SpaceshipVote",
+  "version": "1.0",
+  "description": "vote for ft in just one tab",
+  "content_scripts": [
+    {
+      "matches": ["https://flavortown.hackclub.com/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "permissions": ["storage"]
+}
