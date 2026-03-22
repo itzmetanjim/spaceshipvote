@@ -16,8 +16,8 @@ async function run(){
     repo=repobtn.href
     readme=readmebtn.href
     console.log("ssvo: links", demo, repo, readme)
-    uncentrify(document.querySelector('div.ui-heading.ui-heading--blue.ui-heading--full'))
-    uncentrify(document.querySelector('div.votes-new__payout-meter'))
+    //uncentrify(document.querySelector('div.ui-heading.ui-heading--blue.ui-heading--full'))
+    //uncentrify(document.querySelector('div.votes-new__payout-meter'))
     uncentrify(document.querySelector('div.votes-new__main'))
     uncentrify(document.querySelector('div.votes-new__project'))
     newdiv=document.createElement("div")
