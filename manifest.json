@@ -18,7 +18,7 @@
       "enabled": true,
       "path": "rules.json"
     }]
-  }
+  },
   "icons": {
     "16": "icon.png",
     "48": "icon.png",
