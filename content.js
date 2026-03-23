@@ -92,8 +92,8 @@ async function run(){
 </a>
 </div>
 
-<iframe id="spaceshipvotedemoframe" class="spaceshipvoteframe" src="${demo}" style="display:none;flex-grow: 1;width: 100%;height:100vh;border: none;background-color:#fff" sandbox="allow-scripts allow-forms allow-popups allow-modals allow-downloads ${demo!=dxemo?"allow-same-origin":""}"></iframe>
-<iframe id="spaceshipvoterepoframe" class="spaceshipvoteframe" src="${repo}" style="display:none;flex-grow: 1;width: 100%;height:100vh;border: none;background-color:#fff" sandbox="allow-scripts allow-forms allow-popups allow-modals allow-downloads ${repo!=rxepo?"allow-same-origin":""}"></iframe>
+<iframe id="spaceshipvotedemoframe" class="spaceshipvoteframe" src="${demo}" style="display:none;flex-grow: 1;width: 100%;height:100vh;border: none;background-color:#fff" sandbox="allow-scripts allow-forms allow-popups allow-modals allow-downloads ${demo!=dxemo?"allow-same-origin":"allow-same-origin"}"></iframe>
+<iframe id="spaceshipvoterepoframe" class="spaceshipvoteframe" src="${repo}" style="display:none;flex-grow: 1;width: 100%;height:100vh;border: none;background-color:#fff" sandbox="allow-scripts allow-forms allow-popups allow-modals allow-downloads ${repo!=rxepo?"allow-same-origin":"allow-same-origin"}"></iframe>
 <div id="spaceshipvotereadmeframe" style="padding:30px;background-color:rgba(0,0,0,50);border-radius=20px;max-width:40vw"><pre style="white-space: pre-wrap; word-break: break-word;background-color:rgba(0,0,0,0) !important">${rreadme}</pre></div>
     `
     document.querySelector('div.votes-new__project').after(newdiv)
