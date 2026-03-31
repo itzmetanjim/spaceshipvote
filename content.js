@@ -13,6 +13,23 @@ function uncentrify(x){
     x.style.alignItems="flex-start"
     x.style.marginInline="0"
 }
+var originalFetch=window.fetch
+function monkeypatchedfetch(...args){
+    const [resource, config] = args;
+    if (resource.includes("flavourtown.hackclub.com/votes/")&& config?.method=="POST"){
+        console.log("ssvo: intercepted vote submission", resource, config)
+        try{
+            let body=JSON.parse(config.body)
+            body["vote[repo_url_clicked]"]=window.repoUrlClicked || false;
+            body["vote[demo_url_clicked]"]=window.demoUrlClicked || false;
+            config.body=JSON.stringify(body)
+            console.log("ssvo: modified request body", config.body)
+        } catch(e){
+            console.log("ssvo: failed to modify request body", e)}
+    }
+    return originalFetch(resource, config)
+}
+window.fetch=monkeypatchedfetch 
 async function run(){
     if (!window.location.href.includes('/votes/new')) {
         console.log('this is not a vote page')
@@ -123,5 +140,7 @@ function changeTab(idx){
         }
     })
     document.getElementById(btnlist[idx]).style.setProperty("background-color","#585b70","important")
+    if (idx==0){window.demoUrlClicked=true}
+    if (idx==1){window.repoUrlClicked=true}
 }
 run()
